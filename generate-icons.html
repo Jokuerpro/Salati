@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"></head>
+<body>
+<canvas id="c192" width="192" height="192" style="display:none"></canvas>
+<canvas id="c512" width="512" height="512" style="display:none"></canvas>
+<script>
+function drawIcon(canvas, size) {
+  const ctx = canvas.getContext('2d');
+  const s = size;
+  
+  // Background
+  const grad = ctx.createLinearGradient(0, 0, s, s);
+  grad.addColorStop(0, '#0f1628');
+  grad.addColorStop(1, '#1a2540');
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.roundRect(0, 0, s, s, s * 0.2);
+  ctx.fill();
+  
+  // Gold border
+  ctx.strokeStyle = 'rgba(201,150,61,0.5)';
+  ctx.lineWidth = s * 0.02;
+  ctx.beginPath();
+  ctx.roundRect(s*0.04, s*0.04, s*0.92, s*0.92, s * 0.17);
+  ctx.stroke();
+  
+  // Mosque emoji
+  ctx.font = `${s * 0.55}px serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('🕌', s/2, s/2);
+  
+  return canvas.toDataURL('image/png');
+}
+
+const data192 = drawIcon(document.getElementById('c192'), 192);
+const data512 = drawIcon(document.getElementById('c512'), 512);
+
+document.body.innerHTML = `
+  <p>icon-192.png: <a download="icon-192.png" href="${data192}">تحميل</a></p>
+  <p>icon-512.png: <a download="icon-512.png" href="${data512}">تحميل</a></p>
+  <img src="${data192}" width="192">
+`;
+</script>
+</body>
+</html>
