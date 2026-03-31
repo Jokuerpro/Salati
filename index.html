@@ -416,11 +416,11 @@ select{-webkit-appearance:none;appearance:none;outline:none;border:none;cursor:p
   <!-- QIBLA -->
   <div class="page" id="pageQibla">
     <div class="qibla-sec">
-      <div class="qibla-title">اتجاه القبلة</div>
+      <div class="qibla-title" id="EqiblaTitle">اتجاه القبلة</div>
       <div class="qr">
         <div class="qc">
-          <div class="qdir">ش</div><div class="qdir">ق</div>
-          <div class="qdir">ج</div><div class="qdir">غ</div>
+          <div class="qdir" id="EqdirN">ش</div><div class="qdir" id="EqdirE">ق</div>
+          <div class="qdir" id="EqdirS">ج</div><div class="qdir" id="EqdirW">غ</div>
           <div class="qli" id="EqiblaLine"></div>
           <div id="EneedleW"><div class="ndl"></div></div>
           <div class="qcc"></div>
@@ -430,8 +430,8 @@ select{-webkit-appearance:none;appearance:none;outline:none;border:none;cursor:p
       </div>
       <div class="qi" id="EqiblaInfoText">حدد موقعك لحساب اتجاه القبلة</div>
       <div class="qinfo-row">
-        <div class="qib"><div class="qib-l">الاتجاه</div><div class="qib-v" id="EqiblaDeg">--</div></div>
-        <div class="qib"><div class="qib-l">الجهة</div><div class="qib-v" id="EqiblaDir">--</div></div>
+        <div class="qib"><div class="qib-l" id="EqdirLabel">الاتجاه</div><div class="qib-v" id="EqiblaDeg">--</div></div>
+        <div class="qib"><div class="qib-l" id="EqsideLabel">الجهة</div><div class="qib-v" id="EqiblaDir">--</div></div>
       </div>
       <div class="qact-row">
         <button class="qab gps" id="EqiblaBtn" onclick="qiblaLoc()"><i class="fas fa-location-crosshairs"></i><span id="EqiblaBtnTxt">تحديد الموقع</span></button>
@@ -456,48 +456,52 @@ select{-webkit-appearance:none;appearance:none;outline:none;border:none;cursor:p
   <!-- SETTINGS -->
   <div class="page" id="pageSettings">
     <div class="set-sec">
-      <div class="sec-hd"><span>الإعدادات</span><div class="sec-hd-l"></div></div>
+      <div class="sec-hd"><span id="EsecSettings">الإعدادات</span><div class="sec-hd-l"></div></div>
 
-      <div class="sec-hd"><span>الإشعارات</span><div class="sec-hd-l"></div></div>
+      <div class="sec-hd"><span id="EsecNotif">الإشعارات</span><div class="sec-hd-l"></div></div>
       <div class="sg">
-        <div class="si" onclick="requestNotifPermission()" style="cursor:pointer">
-          <div class="si-l"><i class="fas fa-bell"></i><span>إشعارات الصلاة</span></div>
+        <div class="si" onclick="toggleNotifSetting()" style="cursor:pointer">
+          <div class="si-l"><i class="fas fa-bell"></i><span id="EnotifLabel">إشعارات الصلاة</span></div>
           <div id="EnotifToggle" class="tog"></div>
         </div>
+        <!-- نص حالة الإشعار داخل الإعدادات -->
+        <div class="si" style="border-top:none;padding:8px 14px">
+          <div style="font-size:.65rem;color:var(--text2)" id="EnotifHint">اضغط للسماح بإشعارات الصلاة حتى لو أغلقت التطبيق</div>
+        </div>
       </div>
 
-      <div class="sec-hd"><span>صوت الأذان</span><div class="sec-hd-l"></div></div>
+      <div class="sec-hd"><span id="EsecAdhan">صوت الأذان</span><div class="sec-hd-l"></div></div>
       <div class="sg">
         <div class="si">
-          <div class="si-l"><i class="fas fa-volume-high"></i><span>الأذان</span></div>
+          <div class="si-l"><i class="fas fa-volume-high"></i><span id="EadhanLabel">الأذان</span></div>
           <select class="sel" id="EadhanSel" onchange="chAdhan()">
-            <option value="mecca">مكة المكرمة</option>
-            <option value="medina">المدينة المنورة</option>
-            <option value="aqsa">المسجد الأقصى</option>
-            <option value="egypt">مصر</option>
-            <option value="none">بدون صوت</option>
+            <option value="mecca" id="Oadhan_mecca">مكة المكرمة</option>
+            <option value="medina" id="Oadhan_medina">المدينة المنورة</option>
+            <option value="aqsa" id="Oadhan_aqsa">المسجد الأقصى</option>
+            <option value="egypt" id="Oadhan_egypt">مصر</option>
+            <option value="none" id="Oadhan_none">بدون صوت</option>
           </select>
         </div>
       </div>
 
-      <div class="sec-hd"><span>طريقة الحساب</span><div class="sec-hd-l"></div></div>
+      <div class="sec-hd"><span id="EsecCalc">طريقة الحساب</span><div class="sec-hd-l"></div></div>
       <div class="sg">
         <div class="si">
-          <div class="si-l"><i class="fas fa-calculator"></i><span>الطريقة</span></div>
+          <div class="si-l"><i class="fas fa-calculator"></i><span id="EcalcLabel">الطريقة</span></div>
           <select class="sel" id="EcalcSel" onchange="chCalc()">
-            <option value="5">الهيئة المصرية</option>
-            <option value="4">أم القرى</option>
-            <option value="2">ISNA</option>
-            <option value="3">MWL</option>
-            <option value="1">جامعة العلوم</option>
+            <option value="5" id="Ocalc5">الهيئة المصرية</option>
+            <option value="4" id="Ocalc4">أم القرى</option>
+            <option value="2" id="Ocalc2">ISNA</option>
+            <option value="3" id="Ocalc3">MWL</option>
+            <option value="1" id="Ocalc1">جامعة العلوم</option>
           </select>
         </div>
       </div>
 
-      <div class="sec-hd"><span>اللغة</span><div class="sec-hd-l"></div></div>
+      <div class="sec-hd"><span id="EsecLang">اللغة</span><div class="sec-hd-l"></div></div>
       <div class="sg">
         <div class="si">
-          <div class="si-l"><i class="fas fa-language"></i><span>اختر اللغة</span></div>
+          <div class="si-l"><i class="fas fa-language"></i><span id="ElangChooseLabel">اختر اللغة</span></div>
           <div class="lang-f">
             <button class="lang-btn on" id="ElangAr" onclick="setLang('ar')">العربية</button>
             <button class="lang-btn" id="ElangEn" onclick="setLang('en')">English</button>
@@ -510,10 +514,10 @@ select{-webkit-appearance:none;appearance:none;outline:none;border:none;cursor:p
 
 <div class="bn">
   <div class="bn-r">
-    <button class="ni on" id="navHome" onclick="goPage('Home')"><i class="fas fa-mosque"></i><div class="ni-l">الرئيسية</div></button>
-    <button class="ni" id="navQibla" onclick="goPage('Qibla')"><i class="fas fa-kaaba"></i><div class="ni-l">القبلة</div></button>
-    <button class="ni" id="navCalendar" onclick="goPage('Calendar')"><i class="fas fa-calendar-days"></i><div class="ni-l">التقويم</div></button>
-    <button class="ni" id="navSettings" onclick="goPage('Settings')"><i class="fas fa-sliders"></i><div class="ni-l">الإعدادات</div></button>
+    <button class="ni on" id="navHome" onclick="goPage('Home')"><i class="fas fa-mosque"></i><div class="ni-l" id="EnHome">الرئيسية</div></button>
+    <button class="ni" id="navQibla" onclick="goPage('Qibla')"><i class="fas fa-kaaba"></i><div class="ni-l" id="EnQibla">القبلة</div></button>
+    <button class="ni" id="navCalendar" onclick="goPage('Calendar')"><i class="fas fa-calendar-days"></i><div class="ni-l" id="EnCalendar">التقويم</div></button>
+    <button class="ni" id="navSettings" onclick="goPage('Settings')"><i class="fas fa-sliders"></i><div class="ni-l" id="EnSettings">الإعدادات</div></button>
   </div>
 </div>
 
@@ -613,7 +617,7 @@ const PRAYER_EMOJI={fajr:'🌅',sunrise:'☀️',dhuhr:'🌞',asr:'🌤️',magh
 const PICONS={fajr:'fa-cloud-sun',sunrise:'fa-sun',dhuhr:'fa-sun',asr:'fa-cloud-sun',maghrib:'fa-moon',isha:'fa-moon'};
 const PN=['fajr','sunrise','dhuhr','asr','maghrib','isha'];
 
-let C={lang:'ar',lat:null,lon:null,locSrc:null,city:'',calcM:5,adhan:'mecca',fcmToken:null};
+let C={lang:'ar',lat:null,lon:null,locSrc:null,city:'',calcM:5,adhan:'mecca',fcmToken:null,notifsEnabled:false};
 let PT={},nxtP=null,calDate=new Date(),toastTimer,localAlarms=[];
 
 function t(k){return TR[C.lang][k]||k;}
@@ -685,21 +689,24 @@ function hashStr(str){
 }
 
 /* ══════════════════════════════════════
-   NOTIFICATIONS PERMISSION
+   NOTIFICATIONS - تفعيل وإلغاء
 ══════════════════════════════════════ */
+
+// يُستدعى من بانر الصفحة الرئيسية
 async function requestNotifPermission(){
-  if(Notification.permission==='granted'){
-    // بالفعل مفعّل — تحديث FCM
-    await registerFCM();
-    scheduleLocalAlarms();
-    showToast(t('notifActive'),'ok');
-    checkNotifStatus();return;
-  }
   if(Notification.permission==='denied'){
     showToast(t('notifDenied'),'err');return;
   }
+  if(Notification.permission==='granted'){
+    // إذا مفعّل → إلغاء التفعيل
+    C.notifsEnabled=false;saveC();
+    localAlarms.forEach(clearTimeout);localAlarms=[];
+    showToast(C.lang==='ar'?'تم إيقاف الإشعارات':'Notifications disabled','info');
+    checkNotifStatus();return;
+  }
   const perm=await Notification.requestPermission();
   if(perm==='granted'){
+    C.notifsEnabled=true;saveC();
     await registerFCM();
     scheduleLocalAlarms();
     showToast(t('notifEnabled'),'ok');
@@ -709,28 +716,81 @@ async function requestNotifPermission(){
   checkNotifStatus();
 }
 
+// يُستدعى من زر Toggle في الإعدادات
+async function toggleNotifSetting(){
+  if(Notification.permission==='denied'){
+    showToast(t('notifDenied'),'err');
+    // إظهار رابط الإعدادات
+    if(C.lang==='ar')
+      showToast('يرجى السماح بالإشعارات من إعدادات الهاتف يدوياً','err');
+    return;
+  }
+  if(Notification.permission==='granted'&&C.notifsEnabled){
+    // إلغاء تفعيل الإشعارات
+    C.notifsEnabled=false;saveC();
+    localAlarms.forEach(clearTimeout);localAlarms=[];
+    showToast(C.lang==='ar'?'تم إيقاف الإشعارات':'Notifications disabled','info');
+  } else {
+    // تفعيل الإشعارات
+    if(Notification.permission!=='granted'){
+      const perm=await Notification.requestPermission();
+      if(perm!=='granted'){showToast(t('notifDenied'),'err');checkNotifStatus();return;}
+    }
+    C.notifsEnabled=true;saveC();
+    await registerFCM();
+    scheduleLocalAlarms();
+    showToast(t('notifEnabled'),'ok');
+  }
+  checkNotifStatus();
+}
+
 function checkNotifStatus(){
   const banner=E('EnotifBanner');
   const status=E('EnotifStatus');
   const tog=E('EnotifToggle');
-  if(!('Notification'in window)){banner.classList.add('hidden');return;}
-  if(Notification.permission==='granted'){
+  const hint=E('EnotifHint');
+  const ar=C.lang==='ar';
+
+  if(!('Notification'in window)){
+    banner.classList.add('hidden');
+    if(hint)hint.textContent=ar?'المتصفح لا يدعم الإشعارات':'Browser does not support notifications';
+    return;
+  }
+
+  const isOn=Notification.permission==='granted'&&C.notifsEnabled!==false;
+
+  if(isOn){
+    // مفعّل
     banner.classList.add('hidden');
     status.classList.remove('hidden','off');
     status.classList.add('on');
     E('EnotifStatusTxt').textContent=t('notifActive');
     tog.classList.add('on');
-  }else{
+    if(hint)hint.textContent=ar?'✓ الإشعارات مفعّلة — اضغط للإيقاف':'✓ Notifications ON — tap to disable';
+  } else if(Notification.permission==='denied'){
+    // مرفوض من النظام
     banner.classList.remove('hidden');
     status.classList.add('hidden');
     tog.classList.remove('on');
+    E('EnotifBannerTitle').textContent=ar?'الإشعارات محظورة':'Notifications Blocked';
+    E('EnotifBannerSub').textContent=ar?'فعّلها من إعدادات الهاتف ← التطبيقات ← الإشعارات':'Enable from Phone Settings → Apps → Notifications';
+    E('EnotifBannerBtn').textContent=ar?'فهمت':'OK';
+    if(hint)hint.textContent=ar?'مرفوض — يرجى السماح يدوياً من إعدادات الهاتف':'Denied — please allow manually from phone settings';
+  } else {
+    // غير مفعّل
+    banner.classList.remove('hidden');
+    status.classList.add('hidden');
+    tog.classList.remove('on');
+    if(hint)hint.textContent=ar?'اضغط للسماح بإشعارات الصلاة حتى لو أغلقت التطبيق':'Tap to allow prayer notifications even when app is closed';
   }
 }
 
 /* إنذارات محلية كبديل احتياطي */
 function scheduleLocalAlarms(){
   localAlarms.forEach(clearTimeout);localAlarms=[];
-  if(!PT||Notification.permission!=='granted')return;
+  // لا تجدول إذا لم يسمح المستخدم أو ألغى التفعيل
+  if(!PT||Notification.permission!=='granted'||C.notifsEnabled===false)return;
+  const ar=C.lang==='ar';
   PN.forEach(p=>{
     const key=p.charAt(0).toUpperCase()+p.slice(1);
     const tm=PT[key];if(!tm)return;
@@ -741,15 +801,18 @@ function scheduleLocalAlarms(){
     const diff=tgt-now;
     if(diff>0&&diff<86400000){
       localAlarms.push(setTimeout(()=>{
-        new Notification(t(p),{
-          body:`حان وقت ${t(p)} - ${formatTime(h,m)}`,
-          icon:'/icon-192.png',
-          badge:'/icon-192.png',
-          vibrate:[500,200,500],
-          tag:'prayer-'+p,
-          requireInteraction:true
-        });
-        playAdh();
+        if(Notification.permission==='granted'&&C.notifsEnabled!==false){
+          new Notification(t(p),{
+            body:`${ar?'حان وقت':'Time for'} ${t(p)} — ${formatTime(h,m)}`,
+            icon:'/icon-192.png',
+            badge:'/icon-192.png',
+            vibrate:[500,200,500,200,500],
+            tag:'prayer-'+p,
+            requireInteraction:true,
+            dir:ar?'rtl':'ltr'
+          });
+          playAdh();
+        }
       },diff));
     }
   });
@@ -775,11 +838,14 @@ function updateDates(){
 }
 
 /* ══════════════════════════════════════
-   UI
+   UI - شامل لكل النصوص
 ══════════════════════════════════════ */
 function updateUI(){
+  const ar = C.lang==='ar';
   document.documentElement.lang=C.lang;
-  document.documentElement.dir=C.lang==='ar'?'rtl':'ltr';
+  document.documentElement.dir=ar?'rtl':'ltr';
+
+  // الصفحة الرئيسية
   E('EnextTag').textContent=t('next');
   E('EprayersHead').textContent=t('prayers');
   E('EgpsBtnTxt').textContent=t('gpsBtn');
@@ -787,15 +853,65 @@ function updateUI(){
   E('EhrsL').textContent=t('hrs');
   E('EminsL').textContent=t('mins');
   E('EsecsL').textContent=t('secs');
-  E('ElangAr').classList.toggle('on',C.lang==='ar');
-  E('ElangEn').classList.toggle('on',C.lang==='en');
+
+  // بانر الإشعارات
+  E('EnotifBannerTitle').textContent=ar?'فعّل إشعارات الصلاة':'Enable Prayer Notifications';
+  E('EnotifBannerSub').textContent=ar?'استقبل أذان الصلاة حتى لو أغلقت التطبيق':'Get prayer call even when app is closed';
+  E('EnotifBannerBtn').textContent=ar?'تفعيل':'Enable';
+
+  // صفحة القبلة
+  E('EqiblaTitle').textContent=ar?'اتجاه القبلة':'Qibla Direction';
+  E('EqdirN').textContent=ar?'ش':'N';
+  E('EqdirE').textContent=ar?'ق':'E';
+  E('EqdirS').textContent=ar?'ج':'S';
+  E('EqdirW').textContent=ar?'غ':'W';
+  E('EqdirLabel').textContent=ar?'الاتجاه':'Direction';
+  E('EqsideLabel').textContent=ar?'الجهة':'Bearing';
+  E('EqiblaBtnTxt').textContent=ar?'تحديد الموقع':'Locate Me';
+  E('EcompassTxt').textContent=t('compassTxt');
+  if(!C.lat||!C.lon) E('EqiblaInfoText').textContent=ar?'حدد موقعك لحساب اتجاه القبلة':'Set your location to calculate Qibla';
+
+  // شريط التنقل
+  E('EnHome').textContent=ar?'الرئيسية':'Home';
+  E('EnQibla').textContent=ar?'القبلة':'Qibla';
+  E('EnCalendar').textContent=ar?'التقويم':'Calendar';
+  E('EnSettings').textContent=ar?'الإعدادات':'Settings';
+
+  // الإعدادات
+  E('EsecSettings').textContent=ar?'الإعدادات':'Settings';
+  E('EsecNotif').textContent=ar?'الإشعارات':'Notifications';
+  E('EnotifLabel').textContent=ar?'إشعارات الصلاة':'Prayer Notifications';
+  E('EsecAdhan').textContent=ar?'صوت الأذان':'Adhan Sound';
+  E('EadhanLabel').textContent=ar?'الأذان':'Adhan';
+  E('EsecCalc').textContent=ar?'طريقة الحساب':'Calculation Method';
+  E('EcalcLabel').textContent=ar?'الطريقة':'Method';
+  E('EsecLang').textContent=ar?'اللغة':'Language';
+  E('ElangChooseLabel').textContent=ar?'اختر اللغة':'Choose Language';
+
+  // خيارات الأذان
+  E('Oadhan_mecca').textContent=ar?'مكة المكرمة':'Makkah';
+  E('Oadhan_medina').textContent=ar?'المدينة المنورة':'Madinah';
+  E('Oadhan_aqsa').textContent=ar?'المسجد الأقصى':'Al-Aqsa';
+  E('Oadhan_egypt').textContent=ar?'مصر':'Egypt';
+  E('Oadhan_none').textContent=ar?'بدون صوت':'No Sound';
+
+  // خيارات الحساب
+  E('Ocalc5').textContent=ar?'الهيئة المصرية':'Egyptian Authority';
+  E('Ocalc4').textContent=ar?'أم القرى':'Umm Al-Qura';
+  E('Ocalc2').textContent='ISNA';
+  E('Ocalc3').textContent='MWL';
+  E('Ocalc1').textContent=ar?'جامعة العلوم الإسلامية':'Islamic University';
+
+  // تحديث حالة التبديل
+  E('ElangAr').classList.toggle('on',ar);
+  E('ElangEn').classList.toggle('on',!ar);
   E('EadhanSel').value=C.adhan;
   E('EcalcSel').value=C.calcM;
-  // Banner texts
-  E('EnotifBannerTitle').textContent=C.lang==='ar'?'فعّل إشعارات الصلاة':'Enable Prayer Notifications';
-  E('EnotifBannerSub').textContent=C.lang==='ar'?'استقبل أذان الصلاة حتى لو أغلقت التطبيق':'Get prayer call even when app is closed';
-  E('EnotifBannerBtn').textContent=C.lang==='ar'?'تفعيل':'Enable';
-  updateLocDisplay();updateDates();checkNotifStatus();
+
+  // تحديث العداد والمواقيت
+  updateLocDisplay();
+  updateDates();
+  checkNotifStatus();
   if(PT&&Object.keys(PT).length)renderPL();
 }
 function updateLocDisplay(){
